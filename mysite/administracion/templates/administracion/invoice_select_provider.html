@@ -1,0 +1,15 @@
+{% extends "administracion/base.html" %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+<strong>Selecci&oacute;n de proveedor</strong>
+
+<form action="/administracion/invoice_select_order" method="post">
+    {% csrf_token %}
+    {{ form|crispy }}
+	<button type="submit" class="btn btn-primary">Aceptar</button>
+</form>
+
+{% endblock %}

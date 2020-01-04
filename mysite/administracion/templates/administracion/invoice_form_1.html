@@ -1,0 +1,16 @@
+{% extends "administracion/base.html" %}
+
+{% block content %}
+
+Alta de factura
+
+<form action="/administracion/invoice_form" method="post"> {% csrf_token %}
+    {{ form.as_p }}
+    <strong>Detalles<strong>
+    <table>
+    {{ formset.as_table }}
+    </table>
+    <input type="submit" value="Submit" />
+</form>
+
+{% endblock %}

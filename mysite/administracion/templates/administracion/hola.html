@@ -1,0 +1,17 @@
+{{ salu }}
+{{ com }}
+
+
+{% block content %}
+
+<h1>Detalle de factura</h1>
+<form method="POST">
+	{{ formulario.management_form }}
+	<table>
+		{% for form in formulario %}
+		{{ form }}
+		{% endfor %}
+	</table>
+</form>
+
+{% endblock %}

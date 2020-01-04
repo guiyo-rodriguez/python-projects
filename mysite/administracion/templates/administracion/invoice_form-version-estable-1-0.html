@@ -1,0 +1,40 @@
+{% extends "administracion/base_190722.html" %}
+
+{% block javascript %}
+  <script>
+    $("#id_invoice_num").change(function () {
+	  console.log( $(this).val() );
+      var invoice_num = $(this).val();
+
+      $.ajax({
+        url: 'ajax/print_message/',
+        data: {
+          'invoice_num': invoice_num
+        },
+        dataType: 'json',
+        success: function (data) {
+            alert(data['message']);
+          }
+        });
+      });
+  </script>
+{% endblock %}
+
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+<strong>Alta de factura</strong>
+
+<form action="/administracion/invoice_form" method="post"> {% csrf_token %}
+    {% crispy form %}
+    <strong>Detalles<strong>
+
+	{% crispy formset helper %}
+
+	<button type="submit" class="btn btn-primary">Grabar</button>
+
+</form>
+
+{% endblock %}

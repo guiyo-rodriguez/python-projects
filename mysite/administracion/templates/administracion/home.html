@@ -1,0 +1,17 @@
+{% extends "administracion/base.html" %}
+
+{% block content %}
+
+<strong>Mantenimiento de facturas</strong>
+
+<ul>
+    {% for invoice in invoices %}
+    <li>{{ invoice.invoice_num }}  ({{ invoice.order }})
+	<a href="{% url 'administracion:invoice_delete' invoice.id %}">delete</a>
+    </li>
+    {% endfor %}
+</ul>
+
+<a href="{% url 'administracion:invoice_new' %}">New</a>
+
+{% endblock %}

@@ -1,0 +1,108 @@
+{% extends "administracion/base_190722.html" %}
+
+{% block javascript %}
+  <script>
+  	var form_order_row_data = [];
+  	var form_order_row_data_index = [];
+  
+  	function getAndUpdateOrderRowOptionsFromRemote(order_num) {
+        //var order_num = $(this).val();
+        form_order_row_data = [];
+
+        $.ajax({
+          url: 'ajax/get_order_details/',
+          data: {
+            'order_num': order_num
+          },
+          dataType: 'json',
+          success: function (data) {
+          	var $el = $(".dynamic-form:last").find("select[id*='order_row']");
+  			$el.empty();
+              for (var i=0; i < data['orderdetails'].length; i++) {
+              	$el.append($("<option></option>").attr("value", data['orderdetails'][i].order_row).text(data['orderdetails'][i].order_row_item));
+              	form_order_row_data.push(data['orderdetails'][i]);
+              	//form_order_row_data[data['orderdetails'][i].order_row] = data['orderdetails'][i];
+              	form_order_row_data_index[i] = data['orderdetails'][i].order_row;
+              }
+            }
+          });
+  	}
+  	
+  	function updateOrderRowOptions(row){
+    	var $el = $(".dynamic-form:last").find("select[id*='order_row']");
+		$el.empty();
+        for (var i=0; i < form_order_row_data.length; i++) {
+        	$el.append($("<option></option>").attr("value", form_order_row_data[i].order_row).text(form_order_row_data[i].order_row_item));
+		}
+    }
+  	
+  	  	
+  	function getOrderRowOptionsFromRemote(order) {
+        //var order_num = $(this).val();
+
+        $.ajax({
+          url: 'ajax/get_order_details/',
+          data: {
+            'order_num': order
+          },
+          dataType: 'json',
+          success: function (data) {
+              for (var i=0; i < data['orderdetails'].length; i++) {
+              	form_order_row_data.push(data['orderdetails'][i]);
+              }
+            }
+          });
+  	}
+  	
+  	function onChangeId_Order() {
+  		var order_num = $(this).val();
+  		getAndUpdateOrderRowOptionsFromRemote(order_num);
+  		//updateOrderRowOptions();
+  	}
+  	
+    //$("#id_order").change(updateOrderRowOptionsFromRemote);
+    $("#id_order").change(onChangeId_Order);
+    
+    function onChangeSelection() {
+    	console.log("En onChangeSelection");
+  		var esto = $(this).val();
+  		var rowEdit = $(this).parents('tr');
+	    console.log("rowEdit: " + rowEdit[0].inneHTML + ", " + rowEdit[0].rowIndex);
+  		console.log("Order row selected: " + esto);
+  		var indice = form_order_row_data_index.indexOf(parseInt(esto, 10));
+  		var cantidad = form_order_row_data[indice];
+  		console.log("cantidad: " + cantidad);
+  		rowEdit.find("input[name$='row_qty']").val(cantidad.order_row_qty);
+  		//updateOrderRowOptions();
+  	}
+    
+    //$("select[name|='has_details']").change(onChangeSelection);
+    
+    $(document).on('change', "select[name|='has_details']", onChangeSelection);
+    
+    
+    /* $(document).ready(function() {
+    	  $('#order_row table tbody tr td select').change(function() {
+    	    var rowEdit = $(this).parents('tr');
+    	    console.log("rowEdit: " + rowEdit[0].inneHTML + ", " + rowEdit[0].rowIndex);
+    	    rowEdit.children("input[name$='row_qty']").html('111');
+    	  })
+    	}) */
+    
+  </script>
+{% endblock %}
+
+
+{% load crispy_forms_tags %}
+{% block content %}
+<div class="container">
+    <div class="card">
+        <div class="card-header">
+            Alta de factura
+        </div>
+        <div class="card-body">
+             {% crispy form %}
+        </div>
+    </div>
+</div>
+{% endblock content %}
