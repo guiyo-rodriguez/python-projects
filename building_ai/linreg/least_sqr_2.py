@@ -14,10 +14,15 @@ np.set_printoptions(precision=1)    # this just changes the output settings for 
  
 def fit_model(input_file):
     # Please write your code inside this function
+    aux_mat = np.genfromtxt(input_file, delimiter=' ')
+    x = aux_mat[:, :-1]
+    y = aux_mat[:, -1]
 
     # read the data in and fit it. the values below are placeholder values
-    c = np.asarray([])  # coefficients of the linear regression
-    x = np.asarray([])  # input data to the linear regression
+    # c = np.asarray([])  # coefficients of the linear regression
+    # x = np.asarray([])  # input data to the linear regression
+
+    c = np.linalg.lstsq(x, y, rcond=None)[0]
 
     print(c)
     print(x @ c)
