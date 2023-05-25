@@ -18,17 +18,23 @@ test_string = '''
 
 def main():
     np.set_printoptions(precision=1)    # this just changes the output settings for easier reading
+
+    input_train_file = StringIO(train_string)
+    input_test_file = StringIO(test_string)
+
+    aux_train_mat = np.genfromtxt(input_train_file, delimiter=' ')
+    aux_test_mat = np.genfromtxt(input_test_file, delimiter=' ')
+
+    x_train = aux_train_mat[:, :-1]
+    y_train = aux_train_mat[:, -1]
+
+    x_test = aux_test_mat[:, :-1]
+
+    c = np.linalg.lstsq(x_train, y_train, rcond=None)[0]
     
-    # Please write your code inside this function
-
-    # read in the training data and separate it to x_train and y_train
-     
-    # fit a linear regression model to the data and get the coefficients
-    c = np.asarray([])
-
-    # read in the test data and separate x_test from it
-    x_test = np.asarray([])
-
+    print(x_train)
+    print(y_train)
+    print(x_test)
     # print out the linear regression coefficients
     print(c)
 
