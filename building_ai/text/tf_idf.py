@@ -6,7 +6,7 @@ all the king's horses and all the king's men
 couldn't put Humpty together again'''
 
 def idf(word, docs):
-    return np.log(len(docs) / sum([1.0 for doc in docs if word in doc]))
+    return np.log10(len(docs) / sum([1.0 for doc in docs if word in doc]))
 
 def calculate_idf_vector(unique_words, docs):
     idf_vector = np.zeros((len(unique_words)), dtype=float)
@@ -14,6 +14,11 @@ def calculate_idf_vector(unique_words, docs):
         idf_vector[i] = idf(unique_words[i], docs)
     return idf_vector
 
+def calculate_tf_vector(unique_words, doc):
+    tf_vector = np.zeros((len(unique_words)), dtype=float)
+    for i in range(len(unique_words)):
+        tf_vector[i] = doc.count(unique_words[i]) / len(doc)
+    return tf_vector
 
 def main(text):
     # tasks your code should perform:
@@ -41,6 +46,11 @@ def main(text):
     idf_vector = calculate_idf_vector(unique_words, docs)
 
     print("idf_vector: ", idf_vector)
+
+    for i in range(len(docs)):
+        word_vector[i] = calculate_tf_vector(unique_words, docs[i]) * idf_vector
+    
+    print("word_vector: \n", word_vector)
 
     # 2. go over each unique word and calculate its term frequency, and its document frequency
 
