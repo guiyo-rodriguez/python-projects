@@ -8,7 +8,7 @@ couldn't put Humpty together again'''
 def idf(word, docs):
     return np.log(len(docs) / sum([1.0 for doc in docs if word in doc]))
 
-def calcuate_idf_vector(unique_words, docs):
+def calculate_idf_vector(unique_words, docs):
     idf_vector = np.zeros((len(unique_words)), dtype=float)
     for i in range(len(unique_words)):
         idf_vector[i] = idf(unique_words[i], docs)
@@ -38,7 +38,7 @@ def main(text):
 
     print("word_vector: \n", word_vector)
 
-    idf_vector = calcuate_idf_vector(unique_words, docs)
+    idf_vector = calculate_idf_vector(unique_words, docs)
 
     print("idf_vector: ", idf_vector)
 
