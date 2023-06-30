@@ -20,6 +20,9 @@ def calculate_tf_vector(unique_words, doc):
         tf_vector[i] = doc.count(unique_words[i]) / len(doc)
     return tf_vector
 
+def dist_manhattan(a, b):
+    return np.sum(np.abs(np.array(a) - np.array(b)))
+
 def main(text):
     # tasks your code should perform:
 
@@ -51,6 +54,24 @@ def main(text):
         word_vector[i] = calculate_tf_vector(unique_words, docs[i]) * idf_vector
     
     print("word_vector: \n", word_vector)
+
+    N = len(word_vector)
+    print("N: ", N)
+
+    dist = np.empty((N, N), dtype=float)
+    dist.fill(np.inf)
+
+    for x in range(N):
+        for y in range(N):
+            if x == y:
+                continue
+            dist[x, y] = dist_manhattan(word_vector[x], word_vector[y])
+            print("x: ", x, "y: ", y, "dist: ", dist[x, y])
+    
+    print("dist: \n", dist)
+    print("np.argmin(dist): ", np.argmin(dist))
+    print(np.unravel_index(np.argmin(dist), dist.shape))
+
 
     # 2. go over each unique word and calculate its term frequency, and its document frequency
 
