@@ -1,4 +1,5 @@
 import numpy as np
+import string
 
 text = '''Humpty Dumpty sat on a wall
 Humpty Dumpty had a great fall
@@ -28,7 +29,11 @@ def main(text):
 
     # 1. split the text into words, and get a list of unique words that appear in it
     # a short one-liner to separate the text into sentences (with words lower-cased to make words equal 
-    # despite casing) can be done with 
+    # despite casing) can be done with
+     
+    # filtered_text = text.translate(str.maketrans('', '', string.punctuation))
+    # docs = [line.lower().split() for line in filtered_text.split('\n')]
+
     docs = [line.lower().split() for line in text.split('\n')]
 
     print("docs: ", docs)
@@ -40,7 +45,7 @@ def main(text):
 
     print("len(unique_words): ", len(unique_words))
     
-    print("index of 'wall': ", unique_words.index('wall'))
+    #print("index of 'wall': ", unique_words.index('wall'))
 
     word_vector = np.zeros((len(docs), len(unique_words)), dtype=float)
 
@@ -71,6 +76,10 @@ def main(text):
     print("dist: \n", dist)
     print("np.argmin(dist): ", np.argmin(dist))
     print(np.unravel_index(np.argmin(dist), dist.shape))
+    pos = np.unravel_index(np.argmin(dist), dist.shape)
+    print("pos: ", pos)
+    print("docs[pos[0]]: ", docs[pos[0]])
+    print("docs[pos[1]]: ", docs[pos[1]])
 
 
     # 2. go over each unique word and calculate its term frequency, and its document frequency
