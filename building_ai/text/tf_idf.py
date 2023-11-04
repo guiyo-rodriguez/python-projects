@@ -6,6 +6,13 @@ Humpty Dumpty had a great fall
 all the king's horses and all the king's men
 couldn't put Humpty together again'''
 
+text4 = '''11111 11110 11101 11100 11011 
+11001 11000 1 10111 111 10101
+10011 10010 1 10001 10000 01111
+01101 01100 01011 1 01010 01001
+111 00110 1 00101 1000 00011
+00001 111'''
+
 def idf(word, docs):
     return np.log10(len(docs) / sum([1.0 for doc in docs if word in doc]))
 
