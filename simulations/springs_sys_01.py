@@ -2,7 +2,7 @@ import numpy as np
 import pdb
 import matplotlib.pyplot as plt
 
-node_qty = 20
+node_qty = 15
 area = 100
 k = 2.0
 min_distance = 3
