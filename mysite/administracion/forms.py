@@ -50,7 +50,7 @@ class InvoiceDetailForm(forms.ModelForm):
         super(InvoiceDetailForm, self).__init__(*args, **kwargs)
         self.fields['invoice_row'].queryset = InvoiceDetail.objects.filter(invoice=invoice)
 """
-
+# Clase destinada a manipular facturas.
 class InvoiceSelectProviderForm(forms.ModelForm):
     class Meta:
 #        model = Provider
